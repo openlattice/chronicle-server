@@ -237,6 +237,7 @@ public class DataDeletionService implements DataDeletionManager {
             // for legacy studies, only the chronicle super user has permissions to delete from the participant neighbor entity sets
             ApiClient apiClient = apiCacheManager.prodApiClientCache.get( ApiClient.class );
             DataApi chronicleDataApi = apiClient.getDataApi();
+            EntitySetsApi chronicleUserEntitySetsApi = apiClient.getEntitySetsApi();
 
             // ensure study exists
             UUID studyEntityKeyId = Preconditions
@@ -295,7 +296,7 @@ public class DataDeletionService implements DataDeletionManager {
                     false );
             logger.info( "Deleted study {} from global studies dataset", studyId );
 
-            userEntitySetsApi.deleteEntitySet( participantsESID );
+            chronicleUserEntitySetsApi.deleteEntitySet( participantsESID );
             logger.info( "Deleted participant dataset for study {}.", studyId );
 
         } catch ( Exception e ) {
